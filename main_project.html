@@ -18,6 +18,8 @@
 
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
     
     <!-- Your Firebase configuration script (same as in index.html) -->
     <script>
@@ -468,7 +470,7 @@ measurementId: "G-YJL0DV5291"
                                         >Email Address</label
                                     >
                                 </div>
-                                <button class="btn btn--green">
+                                <button  id="payButton2" class="btn btn--green">
                                     Next Step &rarr;
                                 </button>
                             </form>
@@ -560,9 +562,61 @@ measurementId: "G-YJL0DV5291"
                         Operators (“AITO”) and adheres to the AITO Quality
                         Charter and the AITO Sustainable Tourism Guidelines.
                     </p>
-                    <a href="#" class="btn btn--green">Book now</a>
+                    <button type="button" class="btn--green btn" id="payButton1">Pay Now</button>
+                </form>
                 </div>
             </div>
         </div>
+        <script>
+            // Initialize Razorpay for the first fixed amount
+            var options1 = {
+              key: 'rzp_test_W3J8fNCu6YTC3K', // Replace with your actual API key
+              amount: 100000, // Amount in paisa (e.g., 1000 paisa = ₹10)
+              currency: 'INR', // Replace with your currency code
+              name: 'Your Company Name 1',
+              description: 'Payment for Product or Service 1',
+              handler: function (response) {
+                // This function will be called after successful payment
+                alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
+              },
+              prefill: {
+                name: 'Customer Name 1',
+                email: 'customer1@example.com',
+                contact: '1234567890',
+              },
+            };
+          
+            var rzp1 = new Razorpay(options1);
+          
+            document.getElementById('payButton1').onclick = function () {
+              rzp1.open();
+            };
+          
+            // Initialize Razorpay for the second fixed amount
+            var options2 = {
+              key: 'rzp_test_W3J8fNCu6YTC3K', // Replace with your actual API key
+              amount: 200000, // Amount in paisa (e.g., 2000 paisa = ₹20)
+              currency: 'INR', // Replace with your currency code
+              name: 'Your Company Name 2',
+              description: 'Payment for Product or Service 2',
+              handler: function (response) {
+                alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
+              },
+              prefill: {
+                name: 'Customer Name 2',
+                email: 'customer2@example.com',
+                contact: '9876543210',
+              },
+            };
+          
+            var rzp2 = new Razorpay(options2);
+          
+            document.getElementById('payButton2').onclick = function () {
+              rzp2.open();
+            };
+          </script>
+          
+          
+          
     </body>
 </html>
